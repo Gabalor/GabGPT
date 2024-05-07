@@ -1,0 +1,58 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: black;
+  }
+  
+  .h1 {
+    font-size: 24px;
+    font-family:Arial, Helvetica, sans-serif;
+    margin-bottom: 20px;
+    color:#fff;
+  }
+
+  .h2 {
+    font-size: 18px;
+    font-family:Arial, Helvetica, sans-serif;
+    margin-bottom: 20px;
+    color:#fff;
+  }
+
+  .h22 {
+    font-weight: bolder;
+    font-family:Arial, Helvetica, sans-serif;
+    margin-bottom: -5px;
+    color:#fff;
+  }
+  
+  .message_input {
+    width: calc(100% - 80px); /* Se resta el ancho del botón */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .send_button {
+    width: 80px;
+    padding: 10px;
+    margin-left: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .send_button:hover {
+    background-color: #0056b3;
+  }
+  
+  .response {
+    margin-bottom: 25px;
+    color: white;
+    font-family:Arial, Helvetica, sans-serif;
+  }

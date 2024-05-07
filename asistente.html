@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat GabGPT</title>
+  <meta property="og:title" content="Chat GabGPT">
+  <link rel="stylesheet" href="Asistente/groqAPI.css">
+</head>
+<body>
+  <div class="container" id="container">
+    <h1 class="h1">Bienvenido a GabGPT</h1>
+    <h2 class="h2">¿En qué puedo ayudarte?</h2>
+      <input
+        class="message_input"
+        type="text"
+        name="pregunta" 
+        id="messageInput"
+        placeholder="Escribe tu mensaje..."
+      />
+      <button type="submit" class="send_button" id="sendButton">Enviar</button>
+      
+    <p class="h22" id="tupreguntaste"></p>
+    <p class="response" id="pregunta"></p>
+    
+    <p class="h22" id="respuesta"></p>
+    <p class="response" id="response"></p>
+  </div>
+
+  <script src="Asistente/groqAPI.js"></script>
+</body>
+</html>
