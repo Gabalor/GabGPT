@@ -4,7 +4,7 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: black;
+    background-color: rgb(28, 43, 107);
   }
   
   .h1 {
@@ -56,3 +56,9 @@
     color: white;
     font-family:Arial, Helvetica, sans-serif;
   }
+
+  pre {
+    background-color: black;
+    color: white; /* Color del texto dentro de <pre> */
+    padding: 10px; /* Añadir espaciado para mejorar la legibilidad */
+}

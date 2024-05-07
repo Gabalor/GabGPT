@@ -42,13 +42,34 @@ document.addEventListener("DOMContentLoaded", function() {
         throw new Error('Error de red: ' + response.status);
       }
       return response.json();
-    })
+    })  
     .then(data => {
-      const content = data.choices[0].message.content;
+      var content = data.choices[0].message.content;
+      var contentFormat;
+      if (content.includes("```\n")) {
+        // Dividir la cadena en partes usando la secuencia "```\n"
+        var partes = content.split("\n```\n");
+        // Crear una nueva cadena que contenga las partes con el código dentro de un recuadro
+        contentFormat = partes.map(function(part, index) {
+        // Verificar si la parte actual es la parte del código (si es par)
+          if (index % 2 === 1) {
+            //Aparte de definir que estas partes son codigo, tenemos que sustituir los <> para que html no los interprete
+          return "<br><pre><code>" + part.replace(/</g, '&lt;').replace(/>/g, '&gt;') + "</code></pre><br>";
+          } else {
+          return part.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br><br>').replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+          }
+        }).join("");
+      responseElement.innerHTML = contentFormat;
+      }else{
+        contentFormat = content.replace(/\n\n/g, '<br><br>'); //agregamos espaciado que sale mal
+        content = contentFormat.replace(/\n/g, '<br><br>'); //agregamos espaciado que sale mal tambien
+        contentFormat = content.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); //cambiamos texto entre ** a negritas 
+        responseElement.innerHTML = contentFormat;
+      }
+ 
       tupreguntasteElement.innerText = "Tu preguntaste:";
       preguntaElement.innerText = message;
       respuestaElement.innerText = "Respuesta:";
-      responseElement.innerText = content;
       messageInput.value = "";
     })
     .catch(error => {
