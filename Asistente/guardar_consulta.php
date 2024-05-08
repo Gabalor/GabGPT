@@ -10,6 +10,7 @@ $dbname = $env['DB_NAME'];
 $data = json_decode(file_get_contents('php://input'), true);
 $pregunta = $data['pregunta'];
 $fecha = $data['fecha'];
+$ip = $data['ip'];
 if (empty($pregunta)) {
   die("Error en el envio de datos");
 }
@@ -20,7 +21,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta SQL para insertar datos en la columna "pregunta"
-$sql = "INSERT INTO consultas_gabgpt (pregunta, fecha) VALUES ('$pregunta', '$fecha')"; 
+$sql = "INSERT INTO consultas_gabgpt (pregunta, fecha, ip) VALUES ('$pregunta', '$fecha', '$ip')"; 
 
 if ($conn->query($sql) === TRUE) {
   echo json_encode(['success' => true, 'message' => 'Datos recibidos correctamente.']);
