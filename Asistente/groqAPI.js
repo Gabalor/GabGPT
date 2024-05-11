@@ -1,10 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
   const messageInput = document.getElementById('messageInput');
   const sendButton = document.getElementById('sendButton');
-  const tupreguntasteElement = document.getElementById('tupreguntaste');
-  const preguntaElement = document.getElementById('pregunta');
-  const respuestaElement = document.getElementById('respuesta');
-  const responseElement = document.getElementById('response');
+  let responseElement = document.getElementById('response');
   let fechaYHora, ip_user, TOKEN, API_URL, API_IP, messagecontext = [];
 
   sendButton.addEventListener('click', sendMessage);
@@ -66,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function() {
     })  
     .then(data => {
       messagecontext.push(data.choices[0].message);
-      console.log(messagecontext);
 
       var content = data.choices[0].message.content;
       var contentFormat;
@@ -83,17 +79,18 @@ document.addEventListener("DOMContentLoaded", function() {
           return part.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br><br>').replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
           }
         }).join("");
-      responseElement.innerHTML = contentFormat;
+
+        addNewParagraph(contentFormat, message);
+
       }else{
         contentFormat = content.replace(/\n\n/g, '<br><br>'); //agregamos espaciado que sale mal
         content = contentFormat.replace(/\n/g, '<br><br>'); //agregamos espaciado que sale mal tambien
         contentFormat = content.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); //cambiamos texto entre ** a negritas 
-        responseElement.innerHTML = contentFormat;
+
+        addNewParagraph(contentFormat, message);
+
       }
  
-      tupreguntasteElement.innerText = "Tu preguntaste:";
-      preguntaElement.innerText = message;
-      respuestaElement.innerText = "Respuesta:";
       messageInput.value = "";
       dataBase(message);
     })
@@ -133,5 +130,21 @@ document.addEventListener("DOMContentLoaded", function() {
       sendMessage();
     }
   }
+
+
+// Función para agregar un nuevo párrafo
+function addNewParagraph(content, msj) {
+    // Crear un nuevo párrafo
+    const newParagraph = document.createElement('p');
+    newParagraph.className = 'response';
+    newParagraph.innerHTML = "<p class='h22'>Tu preguntaste:</p><br>" + msj + "<br><p class='h22'>Respuesta:</p><br>" + content + "<br><br><hr>";
+
+    // Insertar el nuevo párrafo antes del primer párrafo existente
+    responseElement.insertAdjacentElement('beforebegin', newParagraph);
+
+    // Actualizar la referencia al primer párrafo existente
+    responseElement = newParagraph;
+}
+
   
 });
