@@ -5,16 +5,12 @@ document.addEventListener("DOMContentLoaded", function() {
   const preguntaElement = document.getElementById('pregunta');
   const respuestaElement = document.getElementById('respuesta');
   const responseElement = document.getElementById('response');
-  const fechaYHora = new Date().toString();
-  let ip_user;
-  let TOKEN;
-  let API_URL;
-  let API_IP;
+  let fechaYHora, ip_user, TOKEN, API_URL, API_IP, messagecontext = [];
 
   sendButton.addEventListener('click', sendMessage);
   messageInput.addEventListener('keydown', enterEvent);
 
-  fetch('../includes/getEnv.php')
+  fetch('includes/getEnv.php')
   .then(response => response.json())
   .then(env => {
     TOKEN = env.TOKEN;
@@ -41,8 +37,16 @@ document.addEventListener("DOMContentLoaded", function() {
   };
 
   function sendMessage() {
+    fechaYHora = new Date().toString();
     const message = messageInput.value;
     if(message !== ""){
+
+      const youask = {
+        "role": "user",
+        "content": message
+      }
+      messagecontext.push(youask);
+
     fetch(API_URL, {
       method: 'POST',
       headers: {
@@ -50,10 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
         'Authorization': `Bearer ${TOKEN}`
       },
       body: JSON.stringify({
-        messages: [{
-          "role": "user",
-          "content": message
-        }],
+        messages: messagecontext,
         model: "llama3-70b-8192"
       })
     })
@@ -64,6 +65,9 @@ document.addEventListener("DOMContentLoaded", function() {
       return response.json();
     })  
     .then(data => {
+      messagecontext.push(data.choices[0].message);
+      console.log(messagecontext);
+
       var content = data.choices[0].message.content;
       var contentFormat;
       if (content.includes("```")) {
@@ -101,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function dataBase(message){
-    fetch('Asistente/guardar_consulta.php', {
+    fetch('asistente/guardar_consulta.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -121,7 +125,6 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(function(data) {
       console.log ("Captura correcta!");
       // Aquí puedes manejar la respuesta si es necesario
-      console.log(data);
     })
   }
 

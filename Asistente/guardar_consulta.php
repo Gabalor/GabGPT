@@ -24,7 +24,7 @@ if ($conn->connect_error) {
 $sql = "INSERT INTO consultas_gabgpt (pregunta, fecha, ip) VALUES ('$pregunta', '$fecha', '$ip')"; 
 
 if ($conn->query($sql) === TRUE) {
-  echo json_encode(['success' => true, 'message' => 'Datos recibidos correctamente.']);
+//  echo json_encode(['success' => true, 'message' => 'Datos recibidos correctamente.']);
 } else {
   echo "Error al insertar datos: " . $conn->error;
 }
