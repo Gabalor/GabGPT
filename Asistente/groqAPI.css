@@ -1,6 +1,18 @@
 .container {
     max-width: 700px;
     margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-image: linear-gradient(to bottom, rgb(37, 55, 138), rgb(14, 20, 51));
+  }
+
+  .response_container {
+    max-width: 700px;
+    margin: 0 auto;
+    margin-top: -15px;
+    margin-bottom: -20px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 15px;

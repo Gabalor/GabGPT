@@ -137,7 +137,7 @@ function addNewParagraph(content, msj) {
     // Crear un nuevo párrafo
     const newParagraph = document.createElement('p');
     newParagraph.className = 'response';
-    newParagraph.innerHTML = "<p class='h22'>Tu preguntaste:</p><br>" + msj + "<br><p class='h22'>Respuesta:</p><br>" + content + "<br><br><hr>";
+    newParagraph.innerHTML = "<div class='response_container'><p class='h22'>Tu preguntaste:</p><br>" + msj + "<br><p class='h22'>Respuesta:</p><br>" + content + "<br><br><div>";
 
     // Insertar el nuevo párrafo antes del primer párrafo existente
     responseElement.insertAdjacentElement('beforebegin', newParagraph);
