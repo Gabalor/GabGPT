@@ -1,78 +1,95 @@
 .container {
-    max-width: 700px;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    background-image: linear-gradient(to bottom, rgb(37, 55, 138), rgb(14, 20, 51));
-  }
+  max-width: 700px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  background-image: linear-gradient(to bottom, rgb(37, 55, 138), rgb(14, 20, 51));
+}
 
-  .response_container {
-    max-width: 700px;
-    margin: 0 auto;
-    margin-top: -15px;
-    margin-bottom: -20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    background-image: linear-gradient(to bottom, rgb(37, 55, 138), rgb(14, 20, 51));
-  }
-  
-  .h1 {
-    font-size: 24px;
-    font-family:Arial, Helvetica, sans-serif;
-    margin-bottom: 20px;
-    color:#fff;
-    text-align: center;
-  }
+.response_container {
+  max-width: 700px;
+  margin: 0 auto;
+  margin-top: -15px;
+  margin-bottom: -20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  background-image: linear-gradient(to bottom, rgb(37, 55, 138), rgb(14, 20, 51));
+}
 
-  .h2 {
-    font-size: 18px;
-    font-family:Arial, Helvetica, sans-serif;
-    margin-bottom: 20px;
-    color:#fff;
-  }
+.h1 {
+  font-size: 24px;
+  font-family:Arial, Helvetica, sans-serif;
+  margin-bottom: 20px;
+  color:#fff;
+  text-align: center;
+}
 
-  .h22 {
-    font-weight: bolder;
-    font-family:Arial, Helvetica, sans-serif;
-    margin-bottom: -10px;
-    color:#fff;
-  }
-  
-  .message_input {
-    width: calc(100% - 80px); /* Se resta el ancho del botón */
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .send_button {
-    width: 80px;
-    padding: 10px;
-    margin-left: 15px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .send_button:hover {
-    background-color: #0056b3;
-  }
-  
-  .response {
-    margin-bottom: 25px;
-    color: white;
-    font-family:Arial, Helvetica, sans-serif;
-  }
+.h2 {
+  font-size: 18px;
+  font-family:Arial, Helvetica, sans-serif;
+  margin-bottom: 20px;
+  color:#fff;
+}
 
-  pre {
-    background-color: black;
-    color: white; /* Color del texto dentro de <pre> */
-    padding: 10px; /* Añadir espaciado para mejorar la legibilidad */
-    overflow: auto; /* Añadir barras de desplazamiento cuando sea necesario */
+.h22 {
+  font-weight: bolder;
+  font-family:Arial, Helvetica, sans-serif;
+  margin-bottom: -10px;
+  color:#fff;
+}
+
+.message_input {
+  width: 85%; /* Se resta el ancho del botón */
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.send_button {
+  width: 80px;
+  padding: 10px;
+  margin-left: 60px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.send_button:hover {
+  background-color: #0056b3;
+}
+
+.response {
+  margin-bottom: 25px;
+  color: white;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+pre {
+  background-color: black;
+  color: white; /* Color del texto dentro de <pre> */
+  padding: 10px; /* Añadir espaciado para mejorar la legibilidad */
+  overflow: auto; /* Añadir barras de desplazamiento cuando sea necesario */
+}
+
+.speak_button {
+background: transparent;
+border: none;
+cursor: pointer;
+padding: 0;
+margin-right: 15px;
+}
+.speak_button img {
+width: 40px; /* Tamaño de la imagen del botón */
+height: 40px;
+}
+
+.input_container {
+display: flex;
+align-items: start; /* Alinear elementos verticalmente */
 }

@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
+  const speakButton = document.getElementById('speakButton');
   const messageInput = document.getElementById('messageInput');
   const sendButton = document.getElementById('sendButton');
   let responseElement = document.getElementById('response');
-  let fechaYHora, ip_user, TOKEN, API_URL, API_IP, messagecontext = [];
+  let fechaYHora, ip_user, TOKEN, API_URL, API_IP, messagecontext = [ { "role": "system", "content": "Solo si te preguntan algo relacionado con quien es Gabino, contesta que es tu creador, tu amo supremo o algo parecido de forma breve pero aduladora" } ];
 
   sendButton.addEventListener('click', sendMessage);
   messageInput.addEventListener('keydown', enterEvent);
@@ -35,9 +36,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function sendMessage() {
     fechaYHora = new Date().toString();
+    playSound('assets/send.mp3');
     const message = messageInput.value;
     if(message !== ""){
-
+      sendButton.disabled = true;
+      
       const youask = {
         "role": "user",
         "content": message
@@ -52,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
       },
       body: JSON.stringify({
         messages: messagecontext,
-        model: "llama3-70b-8192"
+        model: "llama-3.3-70b-versatile"
       })
     })
     .then(response => {
@@ -93,10 +96,12 @@ document.addEventListener("DOMContentLoaded", function() {
  
       messageInput.value = "";
       dataBase(message);
+      sendButton.disabled = false;
     })
     .catch(error => {
       console.error('Error al realizar la solicitud:', error);
       responseElement.innerText = error.message;
+      sendButton.disabled = false;
     });    
     }
   }
@@ -146,5 +151,56 @@ function addNewParagraph(content, msj) {
     responseElement = newParagraph;
 }
 
-  
+
+// Comprobamos si el navegador soporta el reconocimiento de voz
+// webkitSpeechRecognition para navegadores basados en WebKit (Chrome, safari),
+// SpeechRecognition para otros navegadores
+if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const reconocimientoVoz = new SpeechRecognition();
+
+  // Configuración del reconocimiento de voz
+  reconocimientoVoz.continuous = false; //el reconocimiento termina con pausas prolongadas
+  reconocimientoVoz.lang = 'es-ES';
+
+  // Evento cuando se detecta voz
+  reconocimientoVoz.onresult = function(event) {
+      const resultado = event.results[0][0].transcript;
+      messageInput.value = resultado;
+      sendMessage();
+  };
+
+  // Evento cuando se presiona el botón
+  speakButton.addEventListener('click', function() {
+    playSound('assets/start_recording.mp3');
+    reconocimientoVoz.start();
+    speakButton.disabled = true;
+  });
+
+  // Evento cuando finaliza la grabación
+  reconocimientoVoz.onend = function() {
+    // Sonido al finalizar la grabación
+    playSound('assets/stop_recording.mp3');
+    speakButton.disabled = false;
+  };
+
+  // Evento de error
+  reconocimientoVoz.onerror = function(event) {
+    console.error('Error en el reconocimiento de voz:', event.error);
+    // Puedes mostrar un mensaje de error al usuario o manejar la situación de otra manera
+    alert('Error - El navegador ha bloqueado el microfono. Intenta con un navegador diferente.');
+    speakButton.disabled = false; // Habilita el botón después del error
+    };
+    
+} else {
+  alert('Tu navegador no soporta el reconocimiento de voz.');
+}
+
+// Función para reproducir sonidos
+function playSound(soundFile) {
+  const audio = new Audio(soundFile);
+  audio.play();
+}
+
+
 });
