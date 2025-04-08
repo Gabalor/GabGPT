@@ -3,31 +3,12 @@ document.addEventListener("DOMContentLoaded", function() {
   const messageInput = document.getElementById('messageInput');
   const sendButton = document.getElementById('sendButton');
   let responseElement = document.getElementById('response');
-  let fechaYHora, ip_user, TOKEN, API_URL, API_IP, messagecontext = [ { "role": "system", "content": "Solo si te preguntan algo relacionado con quien es Gabino, contesta que es tu creador, tu amo supremo o algo parecido de forma breve pero aduladora" } ];
+  let fechaYHora, ip_user, messagecontext = [ { "role": "system", "content": "Solo si te preguntan algo relacionado con quien es Gabino, contesta que es tu creador, tu amo supremo o algo parecido de forma breve pero aduladora" } ];
 
   sendButton.addEventListener('click', sendMessage);
   messageInput.addEventListener('keydown', enterEvent);
 
-  const url = `includes/getEnv.php?nocache=${Date.now()}`; //Asegurar de forma extrema que no este cacheado
-fetch(url, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'
-    },
-    cache: 'no-store' // 👈 Esto evita que el navegador almacene en caché la respuesta
-})
-.then(response => response.json())
-.then(env => {
-    TOKEN = env.TOKEN;
-    API_URL = env.API_URL;
-    API_IP = env.API_IP;
-    ipUser();
-})
-.catch(error => console.error('Error:', error));
-
-  function ipUser(){
-    fetch(API_IP)
+    fetch('https://api.ipify.org?format=json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -40,7 +21,6 @@ fetch(url, {
     .catch(error => {
       console.error('Hubo un problema con la solicitud:', error);
     });
-  };
 
   function sendMessage() {
     fechaYHora = new Date().toString();
@@ -55,26 +35,20 @@ fetch(url, {
       }
       messagecontext.push(youask);
 
-    fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${TOKEN}`
-      },
-      body: JSON.stringify({
-        messages: messagecontext,
-        model: "llama-3.3-70b-versatile"
+      fetch('includes/proxy_groq.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({
+          messages: messagecontext
+        })
       })
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error de red: ' + response.status);
-      }
-      return response.json();
-    })  
+      .then(response => response.json())
+
     .then(data => {
       messagecontext.push(data.choices[0].message);
-
       var content = data.choices[0].message.content;
       var contentFormat;
       if (content.includes("```")) {
@@ -99,9 +73,7 @@ fetch(url, {
         contentFormat = content.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); //cambiamos texto entre ** a negritas 
 
         addNewParagraph(contentFormat, message);
-
-      }
- 
+      } 
       messageInput.value = "";
       dataBase(message);
       sendButton.disabled = false;
@@ -132,7 +104,7 @@ fetch(url, {
       }
       return response.json();
     })
-    .then(function(data) {
+    .then(function(data) { 
       console.log ("Captura correcta!");
       // Aquí puedes manejar la respuesta si es necesario
     })
@@ -143,7 +115,6 @@ fetch(url, {
       sendMessage();
     }
   }
-
 
 // Función para agregar un nuevo párrafo
 function addNewParagraph(content, msj) {
@@ -158,7 +129,6 @@ function addNewParagraph(content, msj) {
     // Actualizar la referencia al primer párrafo existente
     responseElement = newParagraph;
 }
-
 
 // Comprobamos si el navegador soporta el reconocimiento de voz
 // webkitSpeechRecognition para navegadores basados en WebKit (Chrome, safari),
@@ -209,6 +179,5 @@ function playSound(soundFile) {
   const audio = new Audio(soundFile);
   audio.play();
 }
-
 
 });
