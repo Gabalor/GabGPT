@@ -8,15 +8,23 @@ document.addEventListener("DOMContentLoaded", function() {
   sendButton.addEventListener('click', sendMessage);
   messageInput.addEventListener('keydown', enterEvent);
 
-  fetch('includes/getEnv.php')
-  .then(response => response.json())
-  .then(env => {
+  const url = `includes/getEnv.php?nocache=${Date.now()}`; //Asegurar de forma extrema que no este cacheado
+fetch(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+    },
+    cache: 'no-store' // 👈 Esto evita que el navegador almacene en caché la respuesta
+})
+.then(response => response.json())
+.then(env => {
     TOKEN = env.TOKEN;
     API_URL = env.API_URL;
     API_IP = env.API_IP;
     ipUser();
-  })
-  .catch(error => console.error('Error:', error));
+})
+.catch(error => console.error('Error:', error));
 
   function ipUser(){
     fetch(API_IP)

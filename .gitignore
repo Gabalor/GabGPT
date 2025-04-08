@@ -1,3 +1,6 @@
 
 includes/getEnv.php
 includes/getEnv_PROD.php
+/vendor/
+.env
+config.php

@@ -1,0 +1,13 @@
+{
+    "name": "gabgpt/project",
+    "description": "Proyecto de prueba de LLMs",
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "authors": [
+        {
+            "name": "Gabalor",
+            "email": "g_ortizbarrio@hotmail.com"
+        }
+    ]
+}
